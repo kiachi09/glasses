@@ -1,6 +1,9 @@
 # glasses
 Our First Freelance Work
 
+Sample site: https://www.warbyparker.com/
+
+
 Lets divide the work!
 
 FRONTEND deadline -  20th january
