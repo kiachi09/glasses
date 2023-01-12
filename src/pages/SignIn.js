@@ -56,7 +56,7 @@ const SignIn = () => {
 						<Typography component="h1" variant="h5">
 							{title}
 						</Typography>
-						<Box component="form" noValidate sx={{ mt: 1 }}>
+						<Box noValidate sx={{ mt: 1 }}>
 							<GoogleLogin
 								onSuccess={credentialResponse => {
 									console.log(credentialResponse);
@@ -73,7 +73,9 @@ const SignIn = () => {
 									</Link>
 								</Grid>
 								<Grid item>
-									<Link href="#" variant="body2"
+									<Link
+										href="#"
+										variant="body2"
 										onClick={() => {
 											setIsLogin(!isLogin);
 											value = !value;

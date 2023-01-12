@@ -1,5 +1,5 @@
 import React from 'react';
-import { Formik, Field, Form, ErrorMessage } from 'formik';
+import { Formik, Form, useField } from 'formik';
 import * as Yup from 'yup';
 import YupPassword from 'yup-password';
 import 'yup-phone';
@@ -10,7 +10,22 @@ import {
 	FormControlLabel,
 	Checkbox,
 } from '@mui/material';
+
 YupPassword(Yup);
+
+const TextInput = props => {
+	const [field, meta] = useField(props.name);
+	return (
+		<TextField
+			error={Boolean(meta.touched && meta.error)}
+			helperText={meta.touched && meta.error}
+			margin="normal"
+			fullWidth
+			{...field}
+			{...props}
+		/>
+	);
+};
 
 const FormikSetup = ({ value }) => {
 	const requiredField = title => Yup.string().required(`${title} is required`);
@@ -55,90 +70,66 @@ const FormikSetup = ({ value }) => {
 					<div className="userDetails">
 						<Grid item>
 							<div className="firstName">
-								<Field
-									as={TextField}
-									margin="normal"
-									fullWidth
+								<TextInput
 									id="firstName"
 									type="text"
 									label="First Name"
 									name="firstName"
 									autoFocus
 								/>
-								<ErrorMessage name="First Name is required" />
 							</div>
 						</Grid>
-						<Grid item marginBottom={2}>
+						<Grid item>
 							<div className="lastName">
-								<Field
-									as={TextField}
-									margin="normal"
-									fullWidth
+								<TextInput
 									id="lastName"
 									type="text"
 									label="Last Name"
 									name="lastName"
 								/>
-								<ErrorMessage name="Last name is required" />
 							</div>
 						</Grid>
 					</div>
 				)}
 				<Grid item>
-					<Field
-						as={TextField}
-						margin="normal"
-						fullWidth
-						name="email"
+					<TextInput
 						label="Email Address"
+						name="email"
+						autoFocus={Boolean(value)}
 						id="email"
 						type="email"
-						autoFocus
-						placeholder="Email address"
 					/>
-					<ErrorMessage name="Email address is required" />
 				</Grid>
+
 				{value || (
 					<div className="number">
 						<Grid item>
-							<Field
-								as={TextField}
-								margin="normal"
-								fullWidth
+							<TextInput
 								name="number"
 								label="Phone Number"
 								id="number"
 								type="number"
 							/>
-							<ErrorMessage name="Phone number is required" />
 						</Grid>
 					</div>
 				)}
 				<Grid item>
-					<Field
-						as={TextField}
-						margin="normal"
-						fullWidth
+					<TextInput
 						name="password"
 						label="Password"
 						id="password"
 						type="password"
 					/>
-					<ErrorMessage name="Password is required" />
 				</Grid>
 				{value || (
 					<div className="passwordConfirm">
 						<Grid item>
-							<Field
-								as={TextField}
-								margin="normal"
-								fullWidth
+							<TextInput
 								name="passwordconfirmation"
 								label="Confirm Password"
 								id="passwordconfirmation"
 								type="password"
 							/>
-							<ErrorMessage name="Confirm your password" />
 						</Grid>
 					</div>
 				)}
