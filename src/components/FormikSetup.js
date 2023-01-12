@@ -33,6 +33,7 @@ const FormikSetup = ({ value }) => {
 	return (
 		<Formik
 			initialValues={{
+				validateOnMount: true,
 				firstName: '',
 				lastName: '',
 				email: '',
@@ -65,91 +66,92 @@ const FormikSetup = ({ value }) => {
 				}, 400);
 			}}
 		>
-			<Form as={FormControlLabel}>
-				{value || (
-					<div className="userDetails">
-						<Grid item>
-							<div className="firstName">
-								<TextInput
-									id="firstName"
-									type="text"
-									label="First Name"
-									name="firstName"
-									autoFocus
-								/>
-							</div>
-						</Grid>
-						<Grid item>
-							<div className="lastName">
-								<TextInput
-									id="lastName"
-									type="text"
-									label="Last Name"
-									name="lastName"
-								/>
-							</div>
-						</Grid>
-					</div>
-				)}
-				<Grid item>
-					<TextInput
-						label="Email Address"
-						name="email"
-						autoFocus={Boolean(value)}
-						id="email"
-						type="email"
-					/>
-				</Grid>
+			{formik => (
+				<Form as={FormControlLabel}>
+					{value || (
+						<div className="userDetails">
+							<Grid item>
+								<div className="firstName">
+									<TextInput
+										id="firstName"
+										type="text"
+										label="First Name"
+										name="firstName"
+									/>
+								</div>
+							</Grid>
+							<Grid item>
+								<div className="lastName">
+									<TextInput
+										id="lastName"
+										type="text"
+										label="Last Name"
+										name="lastName"
+									/>
+								</div>
+							</Grid>
+						</div>
+					)}
+					<Grid item>
+						<TextInput
+							label="Email Address"
+							name="email"
+							id="email"
+							type="email"
+						/>
+					</Grid>
 
-				{value || (
-					<div className="number">
-						<Grid item>
-							<TextInput
-								name="number"
-								label="Phone Number"
-								id="number"
-								type="number"
-							/>
-						</Grid>
-					</div>
-				)}
-				<Grid item>
-					<TextInput
-						name="password"
-						label="Password"
-						id="password"
-						type="password"
-					/>
-				</Grid>
-				{value || (
-					<div className="passwordConfirm">
-						<Grid item>
-							<TextInput
-								name="passwordconfirmation"
-								label="Confirm Password"
-								id="passwordconfirmation"
-								type="password"
-							/>
-						</Grid>
-					</div>
-				)}
-				{value && (
-					<FormControlLabel
-						control={<Checkbox value="remember" color="primary" />}
-						label="Remember me"
-					/>
-				)}
-				<Button
-					variant="contained"
-					fullWidth
-					sx={{ mt: 3, mb: 2 }}
-					color="primary"
-					type="submit"
-					className="button-block"
-				>
-					{title}
-				</Button>
-			</Form>
+					{value || (
+						<div className="number">
+							<Grid item>
+								<TextInput
+									name="number"
+									label="Phone Number"
+									id="number"
+									type="number"
+								/>
+							</Grid>
+						</div>
+					)}
+					<Grid item>
+						<TextInput
+							name="password"
+							label="Password"
+							id="password"
+							type="password"
+						/>
+					</Grid>
+					{value || (
+						<div className="passwordConfirm">
+							<Grid item>
+								<TextInput
+									name="passwordconfirmation"
+									label="Confirm Password"
+									id="passwordconfirmation"
+									type="password"
+								/>
+							</Grid>
+						</div>
+					)}
+					{value && (
+						<FormControlLabel
+							control={<Checkbox value="remember" color="primary" />}
+							label="Remember me"
+						/>
+					)}
+					<Button
+						variant="contained"
+						fullWidth
+						sx={{ mt: 3, mb: 2 }}
+						color="primary"
+						type="submit"
+						className="button-block"
+						disabled={!formik.isValid}
+					>
+						{title}
+					</Button>
+				</Form>
+			)}
 		</Formik>
 	);
 };
