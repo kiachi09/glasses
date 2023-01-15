@@ -1,7 +1,7 @@
 import Sign from '../components/Sign';
 import * as Yup from 'yup';
 import YupPassword from 'yup-password';
-import {FirebaseLogin} from '../firebase/Firebase';
+import { FirebaseLogin } from '../firebase/Firebase';
 YupPassword(Yup);
 
 const SignIn = () => {
@@ -16,7 +16,7 @@ const SignIn = () => {
 		email: requiredField('Email Address').email('Invalid email address'),
 		password: requiredField('Password')
 			.password()
-			.minWords(8, 'Must be at least 8 words'),
+			.min(8, 'Must be at least 8 words'),
 	});
 	const handleSubmit = values => FirebaseLogin(values);
 	return (

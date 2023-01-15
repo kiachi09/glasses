@@ -3,7 +3,7 @@ import Sign from '../components/Sign';
 import * as Yup from 'yup';
 import YupPassword from 'yup-password';
 import 'yup-phone';
-import { FirebaseCreateAccount } from '../firebase/Firebase';
+import { FirebaseCreate } from '../firebase/Firebase';
 
 YupPassword(Yup);
 
@@ -31,13 +31,13 @@ const CreateAccount = () => {
 		number: requiredField('Phone Number').phone(),
 		password: requiredField('Password')
 			.password()
-			.minWords(8, 'Must be at least 8 words'),
+			.min(8, 'Must be at least 8 characters'),
 		passwordconfirmation: requiredField('Confirm Password').oneOf(
 			[Yup.ref('password'), null],
 			'Passwords must match',
 		),
 	});
-	const handleSubmit = values => FirebaseCreateAccount(values);
+	const handleSubmit = values => FirebaseCreate(values);
 	return (
 		<Sign
 			title={title}

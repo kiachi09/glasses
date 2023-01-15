@@ -3,8 +3,13 @@ import { Formik, Form, useField } from 'formik';
 import * as Yup from 'yup';
 import YupPassword from 'yup-password';
 import 'yup-phone';
-import { Grid, Button, TextField, FormControlLabel } from '@mui/material';
-
+import {
+	Grid,
+	Button,
+	TextField,
+	FormControlLabel,
+	Checkbox,
+} from '@mui/material';
 
 YupPassword(Yup);
 
@@ -22,7 +27,12 @@ const TextInput = props => {
 	);
 };
 
-const FormikSetup = ({ title, initialValues, validationSchema, handleSubmit }) => {
+const FormikSetup = ({
+	title,
+	initialValues,
+	validationSchema,
+	handleSubmit,
+}) => {
 	return (
 		<Formik
 			initialValues={initialValues}
@@ -32,7 +42,7 @@ const FormikSetup = ({ title, initialValues, validationSchema, handleSubmit }) =
 			{formik => (
 				<Form as={FormControlLabel}>
 					<Grid item></Grid>
-					{/* {value || (
+					{title === 'Sign In' || (
 						<div className="userDetails">
 							<Grid item>
 								<div className="firstName">
@@ -55,7 +65,7 @@ const FormikSetup = ({ title, initialValues, validationSchema, handleSubmit }) =
 								</div>
 							</Grid>
 						</div>
-					)} */}
+					)}
 					<Grid item>
 						<TextInput
 							label="Email Address"
@@ -65,7 +75,7 @@ const FormikSetup = ({ title, initialValues, validationSchema, handleSubmit }) =
 						/>
 					</Grid>
 					<Grid item>
-						{/* {value || (
+						{title === "Sign In" || (
 							<div className="number">
 								<TextInput
 									name="number"
@@ -74,7 +84,7 @@ const FormikSetup = ({ title, initialValues, validationSchema, handleSubmit }) =
 									type="number"
 								/>
 							</div>
-						)} */}
+						)}
 					</Grid>
 					<Grid item>
 						<TextInput
@@ -85,7 +95,7 @@ const FormikSetup = ({ title, initialValues, validationSchema, handleSubmit }) =
 						/>
 					</Grid>
 					<Grid item>
-						{/* {value || (
+						{title === 'Sign In' || (
 							<div className="passwordConfirm">
 								<TextInput
 									name="passwordconfirmation"
@@ -94,14 +104,14 @@ const FormikSetup = ({ title, initialValues, validationSchema, handleSubmit }) =
 									type="password"
 								/>
 							</div>
-						)} */}
+						)}
 					</Grid>
-					{/* {value && (
+					{title === 'Sign In' && (
 						<FormControlLabel
 							control={<Checkbox value="remember" color="primary" />}
 							label="Remember me"
 						/>
-					)} */}
+					)}
 					<Button
 						variant="contained"
 						fullWidth
