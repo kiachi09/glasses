@@ -3,13 +3,8 @@ import { Formik, Form, useField } from 'formik';
 import * as Yup from 'yup';
 import YupPassword from 'yup-password';
 import 'yup-phone';
-import {
-	Grid,
-	Button,
-	TextField,
-	FormControlLabel,
-	Checkbox,
-} from '@mui/material';
+import { Grid, Button, TextField, FormControlLabel } from '@mui/material';
+
 
 YupPassword(Yup);
 
@@ -27,48 +22,17 @@ const TextInput = props => {
 	);
 };
 
-const FormikSetup = ({ value }) => {
-	const requiredField = title => Yup.string().required(`${title} is required`);
-	const title = value ? 'Sign In' : 'Create Account';
+const FormikSetup = ({ title, initialValues, validationSchema, handleSubmit }) => {
 	return (
 		<Formik
-			initialValues={{
-				validateOnMount: true,
-				firstName: '',
-				lastName: '',
-				email: '',
-				number: '',
-				password: '',
-				passwordconfirmation: '',
-			}}
-			validationSchema={Yup.object({
-				firstName: requiredField('First Name')
-					.matches(/^[aA-zZ\s]+$/, 'Only alphabets are allowed for this field ')
-					.min(3, 'First title must be atleast 3 characters')
-					.max(10, "First title can't be more than 10 characters"), // we can only let letters and spaces
-				lastName: requiredField('Last Name')
-					.matches(/^[aA-zZ\s]+$/, 'Only alphabets are allowed for this field ')
-					.min(3, 'First title must be atleast 3 characters'), // we can only let letters and spaces
-				email: requiredField('Email').email('Invalid email address'),
-				number: requiredField('Phone Number').phone(),
-				password: requiredField('Password')
-					.password()
-					.minWords(8, 'Must be at least 8 words'),
-				passwordconfirmation: requiredField('Confirm Password').oneOf(
-					[Yup.ref('password'), null],
-					'Passwords must match',
-				),
-			})}
-			onSubmit={(values, { setSubmitting }) => {
-				setTimeout(() => {
-					alert(JSON.stringify(values, null, 2));
-					setSubmitting(false);
-				}, 400);
-			}}
+			initialValues={initialValues}
+			validationSchema={validationSchema}
+			onSubmit={values => handleSubmit(values)}
 		>
 			{formik => (
 				<Form as={FormControlLabel}>
-					{value || (
+					<Grid item></Grid>
+					{/* {value || (
 						<div className="userDetails">
 							<Grid item>
 								<div className="firstName">
@@ -91,7 +55,7 @@ const FormikSetup = ({ value }) => {
 								</div>
 							</Grid>
 						</div>
-					)}
+					)} */}
 					<Grid item>
 						<TextInput
 							label="Email Address"
@@ -100,19 +64,18 @@ const FormikSetup = ({ value }) => {
 							type="email"
 						/>
 					</Grid>
-
-					{value || (
-						<div className="number">
-							<Grid item>
+					<Grid item>
+						{/* {value || (
+							<div className="number">
 								<TextInput
 									name="number"
 									label="Phone Number"
 									id="number"
 									type="number"
 								/>
-							</Grid>
-						</div>
-					)}
+							</div>
+						)} */}
+					</Grid>
 					<Grid item>
 						<TextInput
 							name="password"
@@ -121,24 +84,24 @@ const FormikSetup = ({ value }) => {
 							type="password"
 						/>
 					</Grid>
-					{value || (
-						<div className="passwordConfirm">
-							<Grid item>
+					<Grid item>
+						{/* {value || (
+							<div className="passwordConfirm">
 								<TextInput
 									name="passwordconfirmation"
 									label="Confirm Password"
 									id="passwordconfirmation"
 									type="password"
 								/>
-							</Grid>
-						</div>
-					)}
-					{value && (
+							</div>
+						)} */}
+					</Grid>
+					{/* {value && (
 						<FormControlLabel
 							control={<Checkbox value="remember" color="primary" />}
 							label="Remember me"
 						/>
-					)}
+					)} */}
 					<Button
 						variant="contained"
 						fullWidth
