@@ -1,6 +1,8 @@
 import React from 'react';
 import { Formik, Form, useField } from 'formik';
+import { useNavigate } from 'react-router-dom';
 import * as Yup from 'yup';
+import { UserAuth } from '../context/AuthContext';
 import YupPassword from 'yup-password';
 import 'yup-phone';
 import {
@@ -27,12 +29,22 @@ const TextInput = props => {
 	);
 };
 
-const FormikSetup = ({
-	title,
-	initialValues,
-	validationSchema,
-	handleSubmit,
-}) => {
+const FormikSetup = ({ title, initialValues, validationSchema }) => {
+	const { createUser, signIn } = UserAuth();
+	const navigate = useNavigate();
+
+	const handleSubmit = async values => {
+		try {
+			if (title === 'Sign In') {
+				await signIn(values.email, values.password);
+			} else if (title === 'Create Account') {
+				await createUser(values.email, values.password);
+			}
+			navigate('/dashboard');
+		} catch (e) {
+			console.log(e);
+		}
+	};
 	return (
 		<Formik
 			initialValues={initialValues}
@@ -75,7 +87,7 @@ const FormikSetup = ({
 						/>
 					</Grid>
 					<Grid item>
-						{title === "Sign In" || (
+						{title === 'Sign In' || (
 							<div className="number">
 								<TextInput
 									name="number"

@@ -3,7 +3,7 @@ import Sign from '../components/Sign';
 import * as Yup from 'yup';
 import YupPassword from 'yup-password';
 import 'yup-phone';
-import { FirebaseCreate } from '../firebase/Firebase';
+
 
 YupPassword(Yup);
 
@@ -37,11 +37,10 @@ const CreateAccount = () => {
 			'Passwords must match',
 		),
 	});
-	const handleSubmit = values => FirebaseCreate(values);
+
 	return (
 		<Sign
 			title={title}
-			handleSubmit={handleSubmit}
 			initialValues={initialValues}
 			validationSchema={validationSchema}
 		/>

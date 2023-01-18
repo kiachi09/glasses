@@ -9,13 +9,28 @@ import {
 	Typography,
 	createTheme,
 } from '@mui/material';
-import { Link as RouterLink } from 'react-router-dom';
+import { Link as RouterLink, useNavigate } from 'react-router-dom';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import { ThemeProvider } from '@mui/styles';
 import FormikSetup from './FormikSetup';
+import { UserAuth } from '../context/AuthContext';
+import { GoogleButton } from 'react-google-button';
+
 const theme = createTheme();
 
-const Sign = ({ title, initialValues, validationSchema, handleSubmit }) => {
+const Sign = ({ title, initialValues, validationSchema }) => {
+	const { googleSignIn } = UserAuth();
+	const navigate = useNavigate();
+
+	const handleGoogleSignIn = async () => {
+		try {
+			await googleSignIn();
+			navigate('/dashboard');
+		} catch (error) {
+			console.log(error);
+		}
+	};
+
 	return (
 		<ThemeProvider theme={theme}>
 			<Grid container component="main" sx={{ height: '100vh' }}>
@@ -36,10 +51,10 @@ const Sign = ({ title, initialValues, validationSchema, handleSubmit }) => {
 						backgroundPosiion: 'center',
 					}}
 				/>
-				<Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
+				<Grid item xs={16} sm={8} md={5} component={Paper} elevation={6} square>
 					<Box
 						sx={{
-							my: 12,
+							my: 15,
 							mx: 4,
 							display: 'flex',
 							flexDirection: 'column',
@@ -52,11 +67,11 @@ const Sign = ({ title, initialValues, validationSchema, handleSubmit }) => {
 						<Typography component="h1" variant="h5">
 							{title}
 						</Typography>
+						<GoogleButton type="dark" onClick={handleGoogleSignIn} />
 						<FormikSetup
 							title={title}
 							initialValues={initialValues}
 							validationSchema={validationSchema}
-							handleSubmit={handleSubmit}
 						/>
 						<Grid container>
 							<Grid item xs>
